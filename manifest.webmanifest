@@ -2,7 +2,7 @@
   "name": "Abog. Karla Sierra",
   "short_name": "Karla Sierra",
   "description": "Ruta academica interactiva de Abog. Karla Sierra.",
-  "start_url": "./plan-academico.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
