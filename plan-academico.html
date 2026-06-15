@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruta Académica con Amor | Clases Pendientes</title>
+  <meta name="description" content="Ruta académica interactiva de Abog. Karla Sierra." />
+  <meta name="theme-color" content="#d9467c" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Abog. Karla Sierra" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+  <style>
+    :root {
+      --bg: #fff5f8;
+      --surface: #fffafd;
+      --surface-soft: #ffe4ee;
+      --ink: #321827;
+      --muted: #7a5a67;
+      --line: #f3bfd0;
+      --brand: #d9467c;
+      --brand-dark: #8a254f;
+      --success: #c73568;
+      --success-dark: #7c1d44;
+      --success-soft: #ffe6ee;
+      --warning: #a76315;
+      --warning-soft: #fff1d6;
+      --shadow: 0 18px 45px rgba(121, 39, 76, 0.12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(255, 205, 219, 0.62), transparent 28%),
+        radial-gradient(circle at 88% 0%, rgba(255, 231, 198, 0.8), transparent 26%),
+        linear-gradient(180deg, #fff9fb 0%, var(--bg) 42%, #ffffff 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hearts-bg::before {
+      content:
+        "♥   ♡   ♥   ♡   ♥   ♡\A"
+        "♡   ♥   ♡   ♥   ♡   ♥\A"
+        "♥   ♡   ♥   ♡   ♥   ♡\A"
+        "♡   ♥   ♡   ♥   ♡   ♥\A"
+        "♥   ♡   ♥   ♡   ♥   ♡\A"
+        "♡   ♥   ♡   ♥   ♡   ♥";
+      position: absolute;
+      inset: -60px -90px;
+      color: rgba(217, 70, 124, 0.13);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 4.8vw, 4.7rem);
+      font-weight: 700;
+      letter-spacing: clamp(1.5rem, 5vw, 4.5rem);
+      line-height: 2.2;
+      white-space: pre;
+      transform: rotate(-12deg);
+    }
+
+    .heart {
+      position: absolute;
+      display: block;
+      color: rgba(217, 70, 124, 0.27);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 4vw, 4.6rem);
+      font-weight: 700;
+      line-height: 1;
+      text-shadow: 0 12px 34px rgba(138, 37, 79, 0.12);
+      animation: heartFloat 16s ease-in-out infinite;
+    }
+
+    .heart:nth-child(1) { top: 4%; left: 5%; animation-delay: -1s; }
+    .heart:nth-child(2) { top: 10%; right: 10%; font-size: clamp(2rem, 6vw, 6rem); animation-delay: -7s; }
+    .heart:nth-child(3) { top: 29%; left: 2%; animation-delay: -4s; }
+    .heart:nth-child(4) { top: 38%; right: 4%; font-size: clamp(1.8rem, 5vw, 5rem); animation-delay: -10s; }
+    .heart:nth-child(5) { top: 57%; left: 8%; animation-delay: -12s; }
+    .heart:nth-child(6) { top: 68%; right: 13%; animation-delay: -3s; }
+    .heart:nth-child(7) { top: 82%; left: 18%; font-size: clamp(2rem, 5vw, 5.4rem); animation-delay: -9s; }
+    .heart:nth-child(8) { top: 88%; right: 3%; animation-delay: -5s; }
+    .heart:nth-child(9) { top: 18%; left: 47%; font-size: clamp(1.2rem, 3vw, 3.4rem); animation-delay: -14s; }
+    .heart:nth-child(10) { top: 73%; left: 51%; font-size: clamp(1.4rem, 3.4vw, 3.8rem); animation-delay: -6s; }
+
+    @keyframes heartFloat {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(-8deg) scale(1);
+        opacity: 0.46;
+      }
+      50% {
+        transform: translate3d(10px, -22px, 0) rotate(8deg) scale(1.06);
+        opacity: 0.84;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .heart,
+      .progress-fill,
+      .period-card,
+      .class-item,
+      .course-action {
+        animation: none;
+        transition: none;
+      }
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 42px 0 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 26px;
+    }
+
+    .hero-main,
+    .progress-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(217, 70, 124, 0.18);
+      background:
+        radial-gradient(circle at 92% 16%, rgba(255, 215, 224, 0.8), transparent 26%),
+        linear-gradient(135deg, #ffffff 0%, #fff0f5 54%, #fff7e8 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main::after,
+    .progress-panel::after {
+      content: "";
+      position: absolute;
+      right: -32px;
+      bottom: -44px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(217, 70, 124, 0.09);
+      pointer-events: none;
+    }
+
+    .hero-main {
+      padding: 30px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      position: relative;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--brand-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 6px rgba(217, 70, 124, 0.13);
+    }
+
+    h1 {
+      position: relative;
+      margin: 0;
+      max-width: 720px;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .love-note {
+      display: inline-flex;
+      margin: 20px 0 0;
+      padding: 9px 13px;
+      border: 1px solid rgba(217, 70, 124, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--brand-dark);
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+
+    .dedication-note {
+      max-width: 620px;
+      margin: 12px 0 0;
+      color: var(--brand-dark);
+      font-size: 0.98rem;
+      font-weight: 650;
+    }
+
+    .dedication-note strong {
+      color: #b42e61;
+      font-weight: 850;
+    }
+
+    .install-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      min-height: 40px;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 850;
+      box-shadow: 0 12px 26px rgba(138, 37, 79, 0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .install-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(138, 37, 79, 0.22);
+    }
+
+    .install-button:focus-visible {
+      outline: 3px solid rgba(217, 70, 124, 0.24);
+      outline-offset: 2px;
+    }
+
+    .install-button[hidden] {
+      display: none;
+    }
+
+    .progress-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 24px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .progress-value {
+      color: var(--brand-dark);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #f7c9d8;
+    }
+
+    .progress-fill {
+      width: var(--progress);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brand), #f2a65a);
+      transition: width 0.35s ease;
+    }
+
+    .progress-detail {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .progress-detail strong {
+      display: block;
+      color: var(--ink);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      transition: color 0.2s ease;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .stat-card {
+      position: relative;
+      min-height: 118px;
+      padding: 20px;
+      overflow: hidden;
+      border: 1px solid #e5edf7;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 250, 253, 0.96));
+      box-shadow: 0 10px 30px rgba(121, 39, 76, 0.07);
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface-soft);
+    }
+
+    .stat-card.is-live::after {
+      background: var(--success-soft);
+    }
+
+    .stat-label {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(1.75rem, 3vw, 2.35rem);
+      font-weight: 900;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .stat-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.15rem);
+      line-height: 1.1;
+    }
+
+    .section-heading p {
+      max-width: 430px;
+      margin: 0;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 16px;
+      padding: 6px 0 0 34px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      bottom: 28px;
+      left: 12px;
+      width: 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--brand), var(--success));
+    }
+
+    .period-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 24px;
+      padding: 22px;
+      border: 1px solid #f1c8d5;
+      border-radius: var(--radius);
+      background: rgba(255, 252, 254, 0.94);
+      box-shadow: 0 12px 30px rgba(121, 39, 76, 0.07);
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .period-card::before {
+      content: "";
+      position: absolute;
+      top: 28px;
+      left: -30px;
+      width: 17px;
+      height: 17px;
+      border: 4px solid #ffffff;
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(217, 70, 124, 0.16);
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .period-card.is-complete {
+      border-color: rgba(199, 53, 104, 0.35);
+      background: linear-gradient(135deg, #ffffff 0%, #fff0f5 100%);
+    }
+
+    .period-card.is-complete::before {
+      background: var(--success);
+      box-shadow: 0 0 0 4px rgba(199, 53, 104, 0.18);
+    }
+
+    .period-meta {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 18px;
+    }
+
+    .period-title {
+      margin: 0;
+      color: var(--brand-dark);
+      font-size: 1.25rem;
+      line-height: 1.15;
+    }
+
+    .period-count {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: var(--success-soft);
+      color: var(--success-dark);
+      font-size: 0.86rem;
+      font-weight: 800;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .period-count::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .class-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .class-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid #f4d6df;
+      border-radius: var(--radius);
+      background: #fffcff;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .class-item.is-approved {
+      border-color: rgba(199, 53, 104, 0.28);
+      background: #fff0f5;
+    }
+
+    .class-number {
+      display: inline-grid;
+      place-items: center;
+      min-width: 34px;
+      height: 30px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: var(--warning-soft);
+      color: var(--warning);
+      font-size: 0.82rem;
+      font-weight: 900;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .class-item.is-approved .class-number {
+      background: var(--success-soft);
+      color: var(--success-dark);
+    }
+
+    .class-name {
+      min-width: 0;
+      color: #3f2432;
+      font-size: 0.96rem;
+      font-weight: 650;
+      overflow-wrap: break-word;
+      transition: color 0.2s ease;
+    }
+
+    .class-item.is-approved .class-name {
+      color: var(--success-dark);
+      text-decoration: line-through;
+      text-decoration-color: rgba(199, 53, 104, 0.5);
+      text-decoration-thickness: 2px;
+    }
+
+    .course-action {
+      display: inline-flex;
+      grid-column: 2;
+      justify-self: start;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 8px 12px;
+      border: 1px solid #f0c6d4;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--brand-dark);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 850;
+      white-space: nowrap;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .course-action:hover {
+      border-color: rgba(217, 70, 124, 0.48);
+      transform: translateY(-1px);
+    }
+
+    .course-action:focus-visible {
+      outline: 3px solid rgba(217, 70, 124, 0.22);
+      outline-offset: 2px;
+    }
+
+    .class-item.is-approved .course-action {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--success), var(--brand-dark));
+      color: #ffffff;
+    }
+
+    .footer-note {
+      margin: 28px 0 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--brand);
+      border-radius: var(--radius);
+      background: #fffafd;
+      color: var(--muted);
+      box-shadow: 0 10px 30px rgba(121, 39, 76, 0.07);
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        width: min(100% - 28px, 760px);
+        padding-top: 24px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .period-card {
+        grid-template-columns: 1fr;
+      }
+
+      .period-meta {
+        gap: 12px;
+      }
+
+      .class-list {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 8px;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hearts-bg::before {
+        inset: -26px -72px;
+        font-size: clamp(1.8rem, 9vw, 3.2rem);
+        letter-spacing: 1.65rem;
+        line-height: 2.35;
+      }
+
+      .page {
+        width: min(100% - 22px, 460px);
+        padding-top: 12px;
+        padding-bottom: 30px;
+      }
+
+      .hero {
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .hero-main,
+      .progress-panel,
+      .period-card,
+      .stat-card {
+        padding: 16px;
+      }
+
+      .eyebrow {
+        margin-bottom: 10px;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+      }
+
+      h1 {
+        font-size: clamp(1.9rem, 8.3vw, 2.18rem);
+        line-height: 1.02;
+      }
+
+      .love-note {
+        display: flex;
+        width: 100%;
+        margin-top: 16px;
+        padding: 10px 12px;
+        border-radius: var(--radius);
+        font-size: 0.84rem;
+      }
+
+      .dedication-note {
+        margin-top: 10px;
+        font-size: 0.9rem;
+      }
+
+      .progress-panel {
+        gap: 18px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .stat-card {
+        min-height: 98px;
+      }
+
+      .stat-card::after {
+        right: 14px;
+        bottom: 14px;
+        width: 30px;
+        height: 30px;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+      }
+
+      .progress-detail {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 18px;
+        font-size: 0.78rem;
+      }
+
+      .progress-detail strong {
+        font-size: 1.18rem;
+      }
+
+      .section-heading {
+        margin-bottom: 12px;
+      }
+
+      .section-heading h2 {
+        font-size: 1.55rem;
+      }
+
+      .section-heading p {
+        font-size: 0.9rem;
+      }
+
+      .timeline {
+        gap: 12px;
+        padding-left: 20px;
+      }
+
+      .timeline::before {
+        left: 7px;
+      }
+
+      .period-card::before {
+        top: 24px;
+        left: -21px;
+        width: 14px;
+        height: 14px;
+      }
+
+      .period-card {
+        gap: 14px;
+      }
+
+      .period-title {
+        font-size: 1.1rem;
+      }
+
+      .period-count {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+      }
+
+      .class-list {
+        gap: 8px;
+      }
+
+      .class-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 12px;
+      }
+
+      .class-name {
+        font-size: 0.94rem;
+      }
+
+      .class-number,
+      .course-action {
+        grid-column: auto;
+        width: fit-content;
+      }
+
+      .course-action {
+        min-height: 36px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+
+      .install-button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .page {
+        width: min(100% - 18px, 372px);
+      }
+
+      h1 {
+        font-size: 1.78rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-bg" aria-hidden="true">
+    <span class="heart">♥</span>
+    <span class="heart">♡</span>
+    <span class="heart">♥</span>
+    <span class="heart">♡</span>
+    <span class="heart">♥</span>
+    <span class="heart">♡</span>
+    <span class="heart">♥</span>
+    <span class="heart">♡</span>
+    <span class="heart">♥</span>
+    <span class="heart">♡</span>
+  </div>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-main">
+        <div class="eyebrow">Plan académico</div>
+        <h1 id="page-title">Abog. Karla Sierra</h1>
+        <p class="love-note">Cada clase aprobada es un logro más en esta historia de amor y esfuerzo.</p>
+        <p class="dedication-note">
+          Para Karlita: <strong>estoy orgulloso de ti</strong>, de tu constancia y de todo lo bonito que estás construyendo.
+        </p>
+        <button class="install-button" id="installButton" type="button" hidden>Instalar app</button>
+      </div>
+
+      <aside class="progress-panel" aria-label="Progreso general">
+        <div>
+          <div class="progress-label">
+            <span>Progreso general</span>
+            <span class="progress-value" id="progressPercent">0%</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+        <div class="progress-detail">
+          <span><strong id="approvedInline">13</strong> aprobadas</span>
+          <span><strong id="pendingInline">50</strong> pendientes</span>
+          <span><strong id="totalInline">63</strong> total</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="stats-grid" aria-label="Resumen general">
+      <article class="stat-card is-live">
+        <p class="stat-label">Clases aprobadas</p>
+        <p class="stat-value" id="approvedStat">13</p>
+        <p class="stat-note" id="approvedNote">13 logros iniciales</p>
+      </article>
+      <article class="stat-card is-live">
+        <p class="stat-label">Clases pendientes</p>
+        <p class="stat-value" id="pendingStat">50</p>
+        <p class="stat-note" id="pendingNote">Del plan pendiente</p>
+      </article>
+      <article class="stat-card">
+        <p class="stat-label">Clases totales</p>
+        <p class="stat-value" id="totalStat">63</p>
+        <p class="stat-note">Plan completo</p>
+      </article>
+      <article class="stat-card">
+        <p class="stat-label">Finalización estimada</p>
+        <p class="stat-value" style="font-size: clamp(1.55rem, 3vw, 2rem);">Julio 2029</p>
+        <p class="stat-note">Último período planificado</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="timeline-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="timeline-title">Línea de tiempo académica</h2>
+        </div>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+  </main>
+
+  <script>
+    const STORAGE_KEY = "ruta-academica-clases-aprobadas-v1";
+
+    const summary = {
+      approvedBase: 13,
+      pendingBase: 50,
+      total: 63,
+      completion: "Julio 2029"
+    };
+
+    const periods = [
+      {
+        title: "Julio 2026",
+        classes: [
+          { number: 14, name: "Ofimática Avanzada" },
+          { number: 15, name: "Derecho Penal I" },
+          { number: 16, name: "Argumentación y Lógica Jurídica" },
+          { number: 17, name: "Derecho de Sucesiones" },
+          { number: 18, name: "Oratoria Forense y Redacción Jurídica" }
+        ]
+      },
+      {
+        title: "Octubre 2026",
+        classes: [
+          { number: 19, name: "Juegos Estratégicos" },
+          { number: 20, name: "Derecho Penal II" },
+          { number: 21, name: "Obligaciones y Contratos I" },
+          { number: 22, name: "Derecho Procesal Civil I" },
+          { number: 23, name: "Derecho Administrativo I" }
+        ]
+      },
+      {
+        title: "Enero 2027",
+        classes: [
+          { number: 24, name: "Procedimiento y Práctica Procesal Penal" },
+          { number: 25, name: "Derecho Individual del Trabajo" },
+          { number: 26, name: "Obligaciones y Contratos II" },
+          { number: 27, name: "Derecho Procesal Civil II" },
+          { number: 28, name: "Derecho Administrativo II" }
+        ]
+      },
+      {
+        title: "Abril 2027",
+        classes: [
+          { number: 29, name: "Derecho Sindical del Trabajo" },
+          { number: 30, name: "Procedimiento y Práctica Procesal Administrativa" },
+          { number: 31, name: "Práctica Procesal Civil" },
+          { number: 32, name: "Teoría Económica Aplicada al Derecho" }
+        ]
+      },
+      {
+        title: "Julio 2027",
+        classes: [
+          { number: 33, name: "Contabilidad Gerencial" },
+          { number: 34, name: "Métodos Alternos de Solución de Controversias" },
+          { number: 35, name: "Legislación Ambiental y Cambio Climático" },
+          { number: 36, name: "Procedimiento y Práctica Procesal Laboral" }
+        ]
+      },
+      {
+        title: "Octubre 2027",
+        classes: [
+          { number: 37, name: "Electiva de Idioma Extranjero I" },
+          { number: 38, name: "Derecho Mercantil I" },
+          { number: 39, name: "Simulación Judicial" },
+          { number: 40, name: "Derecho Agrario" }
+        ]
+      },
+      {
+        title: "Enero 2028",
+        classes: [
+          { number: 41, name: "Electiva de Idioma Extranjero II" },
+          { number: 42, name: "Derechos Humanos" },
+          { number: 43, name: "Derecho Notarial I" },
+          { number: 44, name: "Derecho Mercantil II" }
+        ]
+      },
+      {
+        title: "Abril 2028",
+        classes: [
+          { number: 45, name: "Electiva de Idioma Extranjero III" },
+          { number: 46, name: "Derecho Internacional Público" },
+          { number: 47, name: "Derecho Notarial II" },
+          { number: 48, name: "Derecho Mercantil Avanzado" }
+        ]
+      },
+      {
+        title: "Julio 2028",
+        classes: [
+          { number: 49, name: "Electiva de Idioma Extranjero IV" },
+          { number: 50, name: "Derecho Internacional Privado" },
+          { number: 51, name: "Sistema Financiero" },
+          { number: 52, name: "Propiedad Intelectual" }
+        ]
+      },
+      {
+        title: "Octubre 2028",
+        classes: [
+          { number: 53, name: "Derecho Fiscal" },
+          { number: 54, name: "Derecho Digital y Nuevas Tecnologías" },
+          { number: 55, name: "Derecho Comercial Internacional" },
+          { number: 56, name: "Generación de Empresas I" }
+        ]
+      },
+      {
+        title: "Enero 2029",
+        classes: [
+          { number: 57, name: "Investigación Jurídica" },
+          { number: 58, name: "Electivo de Formación Específica I" },
+          { number: 59, name: "Electivo de Formación Específica II" },
+          { number: 60, name: "Electivo de Formación Específica III" },
+          { number: 61, name: "Electivo de Formación Específica IV" }
+        ]
+      },
+      {
+        title: "Abril 2029",
+        classes: [
+          { number: 62, name: "Práctica Profesional Pública" }
+        ]
+      },
+      {
+        title: "Julio 2029",
+        classes: [
+          { number: 63, name: "Práctica Profesional Privada" }
+        ]
+      }
+    ];
+
+    const allCourseNumbers = periods.flatMap((period) => period.classes.map((course) => course.number));
+    const approvedCourses = loadApprovedCourses();
+    const timeline = document.getElementById("timeline");
+
+    function loadApprovedCourses() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        const allowed = new Set(periods.flatMap((period) => period.classes.map((course) => course.number)));
+        return new Set(saved.map(Number).filter((number) => allowed.has(number)));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveApprovedCourses() {
+      const sorted = [...approvedCourses].sort((a, b) => a - b);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sorted));
+    }
+
+    function getTotals() {
+      const markedApproved = approvedCourses.size;
+      const approved = summary.approvedBase + markedApproved;
+      const pending = summary.pendingBase - markedApproved;
+      const progress = (approved / summary.total) * 100;
+
+      return { approved, pending, markedApproved, progress };
+    }
+
+    function renderTimeline() {
+      const fragment = document.createDocumentFragment();
+
+      periods.forEach((period, periodIndex) => {
+        const article = document.createElement("article");
+        article.className = "period-card";
+        article.dataset.period = periodIndex;
+
+        const meta = document.createElement("div");
+        meta.className = "period-meta";
+
+        const heading = document.createElement("h3");
+        heading.className = "period-title";
+        heading.textContent = period.title;
+
+        const count = document.createElement("span");
+        count.className = "period-count";
+
+        meta.append(heading, count);
+
+        const list = document.createElement("ol");
+        list.className = "class-list";
+
+        period.classes.forEach((course) => {
+          const item = document.createElement("li");
+          item.className = "class-item";
+          item.dataset.course = course.number;
+
+          const number = document.createElement("span");
+          number.className = "class-number";
+          number.textContent = course.number;
+
+          const name = document.createElement("span");
+          name.className = "class-name";
+          name.textContent = course.name;
+
+          const button = document.createElement("button");
+          button.className = "course-action";
+          button.type = "button";
+          button.dataset.course = course.number;
+
+          item.append(number, name, button);
+          list.appendChild(item);
+        });
+
+        article.append(meta, list);
+        fragment.appendChild(article);
+      });
+
+      timeline.appendChild(fragment);
+    }
+
+    function updateDashboard() {
+      const { approved, pending, markedApproved, progress } = getTotals();
+      const progressText = `${progress.toFixed(1)}%`;
+
+      document.documentElement.style.setProperty("--progress", progressText);
+      document.getElementById("progressPercent").textContent = progressText;
+      document.getElementById("progressFill").style.width = progressText;
+      document.getElementById("approvedInline").textContent = approved;
+      document.getElementById("pendingInline").textContent = pending;
+      document.getElementById("totalInline").textContent = summary.total;
+      document.getElementById("approvedStat").textContent = approved;
+      document.getElementById("pendingStat").textContent = pending;
+      document.getElementById("totalStat").textContent = summary.total;
+      document.getElementById("approvedNote").textContent =
+        `${summary.approvedBase} logros iniciales + ${markedApproved} del plan`;
+      document.getElementById("pendingNote").textContent =
+        `${pending} de ${summary.pendingBase} pendientes originales`;
+    }
+
+    function updateCourses() {
+      document.querySelectorAll(".class-item").forEach((item) => {
+        const courseNumber = Number(item.dataset.course);
+        const isApproved = approvedCourses.has(courseNumber);
+        const button = item.querySelector(".course-action");
+
+        item.classList.toggle("is-approved", isApproved);
+        button.textContent = isApproved ? "Aprobada ♥" : "Aprobar con amor";
+        button.setAttribute("aria-pressed", String(isApproved));
+        button.setAttribute(
+          "aria-label",
+          `${isApproved ? "Quitar aprobación de" : "Marcar como aprobada"} clase ${courseNumber}`
+        );
+      });
+    }
+
+    function updatePeriods() {
+      periods.forEach((period, periodIndex) => {
+        const card = document.querySelector(`[data-period="${periodIndex}"]`);
+        const count = card.querySelector(".period-count");
+        const approvedInPeriod = period.classes.filter((course) => approvedCourses.has(course.number)).length;
+        const totalInPeriod = period.classes.length;
+        const pendingInPeriod = totalInPeriod - approvedInPeriod;
+
+        card.classList.toggle("is-complete", pendingInPeriod === 0);
+        count.textContent =
+          pendingInPeriod === 0
+            ? `${totalInPeriod}/${totalInPeriod} aprobadas`
+            : `${approvedInPeriod}/${totalInPeriod} aprobadas`;
+      });
+    }
+
+    function refreshPageState() {
+      updateDashboard();
+      updateCourses();
+      updatePeriods();
+    }
+
+    timeline.addEventListener("click", (event) => {
+      const button = event.target.closest(".course-action");
+      if (!button) return;
+
+      const courseNumber = Number(button.dataset.course);
+      if (!allCourseNumbers.includes(courseNumber)) return;
+
+      if (approvedCourses.has(courseNumber)) {
+        approvedCourses.delete(courseNumber);
+      } else {
+        approvedCourses.add(courseNumber);
+      }
+
+      saveApprovedCourses();
+      refreshPageState();
+    });
+
+    renderTimeline();
+    refreshPageState();
+
+    let deferredInstallPrompt = null;
+    const installButton = document.getElementById("installButton");
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      installButton.hidden = false;
+    });
+
+    installButton.addEventListener("click", async () => {
+      if (!deferredInstallPrompt) return;
+
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      installButton.hidden = true;
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      installButton.hidden = true;
+    });
+
+    document.documentElement.dataset.serviceWorker = "unsupported";
+
+    if ("serviceWorker" in navigator) {
+      document.documentElement.dataset.serviceWorker = "pending";
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("./sw.js")
+          .then(() => {
+            document.documentElement.dataset.serviceWorker = "registered";
+          })
+          .catch(() => {
+            document.documentElement.dataset.serviceWorker = "error";
+          });
+      });
+    }
+  </script>
+</body>
+</html>
