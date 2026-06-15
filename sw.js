@@ -1,4 +1,4 @@
-const CACHE_NAME = "abog-karla-sierra-v1";
+const CACHE_NAME = "abog-karla-sierra-v2";
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -29,6 +29,18 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+
+  // Redirigir URL vieja → index.html
+  if (url.pathname.endsWith("plan-academico.html")) {
+    event.respondWith(
+      caches.match("./index.html").then(cached =>
+        cached || fetch("./index.html")
+      )
+    );
+    return;
+  }
+
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => caches.match("./index.html"))
